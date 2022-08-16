@@ -37,10 +37,12 @@ class RealtimeMessage {
   }
 
   factory RealtimeMessage.fromMap(Map<String, dynamic> map) {
-    return RealtimeMessage(
-      events: List<String>.from(map['events'] ?? []),
-      payload: Map<String, dynamic>.from(map['payload'] ?? <String, dynamic>{}),
-      channels: List<String>.from(map['channels'] ?? []),
+    // final payload = map['payload'];
+    return RealtimeMessage(      
+      events: List<String>.from(map['events'] ?? []),      
+      payload: (map['payload'] is List<dynamic> && map['payload'].isEmpty) ? // for 'acccount' events payload is []        
+        <String, dynamic>{} : Map<String, dynamic>.from(map['payload'] ?? <String, dynamic>{}),      
+      channels: List<String>.from(map['channels'] ?? []),      
       timestamp: map['timestamp'],
     );
   }
